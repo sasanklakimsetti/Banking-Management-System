@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "savings_accounts")
-@PrimaryKeyJoinColumn(name = "accountnumber")
+@PrimaryKeyJoinColumn(name = "accountNumber")
 public class SavingsAccount extends Account {
     private String savingsType;
     private Integer minimumBalance;

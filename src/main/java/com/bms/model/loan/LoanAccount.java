@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "loan_accounts")
-@PrimaryKeyJoinColumn(name = "account_number")
+@PrimaryKeyJoinColumn(name = "accountNumber")
 public class LoanAccount extends Account {
     private Double loanAmount;
     private String loanType;

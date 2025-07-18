@@ -6,7 +6,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "account")
+@Table(name = "accounts")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "accounttype")
 public class Account {
@@ -18,33 +18,32 @@ public class Account {
             allocationSize = 1,
             initialValue = 2600000
     )
-    private Long accountnumber;
+    private Long accountNumber;
     @OneToOne
     @JoinColumn(name = "customerid", referencedColumnName = "customerid")
-    private Customer customerid;
+    private Customer customerId;
     protected Double balance;
-    private Date creationdate;
-    protected String accounttype;
+    private Date creationDate;
+    protected String accountType;
 
     public Account() {
-        this.creationdate=Date.valueOf(LocalDate.now());
-        this.balance= (double) 0;
+        this.creationDate=Date.valueOf(LocalDate.now());
     }
 
-    public Long getAccountnumber() {
-        return accountnumber;
+    public Long getAccountNumber() {
+        return accountNumber;
     }
 
-    public void setAccountnumber(Long accountnumber) {
-        this.accountnumber = accountnumber;
+    public void setAccountNumber(Long accountNumber) {
+        this.accountNumber = accountNumber;
     }
 
-    public Customer getCustomerid() {
-        return customerid;
+    public Customer getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomerid(Customer customerid) {
-        this.customerid = customerid;
+    public void setCustomerId(Customer customerId) {
+        this.customerId = customerId;
     }
 
     public double getBalance() {
@@ -56,29 +55,29 @@ public class Account {
     }
 
     public Date getCreationDate() {
-        return creationdate;
+        return creationDate;
     }
 
-    public void setCreationDate(Date creationdate) {
-        this.creationdate = creationdate;
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
     public String getAccountType() {
-        return accounttype;
+        return accountType;
     }
 
-    public void setAccountType(String accounttype) {
-        this.accounttype = accounttype;
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
     }
 
     
     public void showAccountDetails() {
         System.out.println("Account{" +
-                "Account No.: " + accountnumber +
-                ", Customer Id: " + customerid +
+                "Account No.: " + accountNumber +
+                ", Customer Id: " + customerId +
                 ", Balance: " + balance +
-                ", Creation Date: " + creationdate +
-                ", Account Type='" + accounttype + '\'' +
+                ", Creation Date: " + creationDate +
+                ", Account Type='" + accountType + '\'' +
                 '}');
     }
 
