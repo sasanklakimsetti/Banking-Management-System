@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoanAccountFactory {
     public CarLoanAccount createCarLoanAccount(final Double loanAmount, final String collateralType, final Double collateralValue, final Integer durationInDays){
+        if(loanAmount<600000){
+            throw new IllegalArgumentException("Car Loan Amount must be greater than 6 lakhs");
+        }
         if(durationInDays<365){
             throw new IllegalArgumentException("Car Loan Duration must be greater than one year");
         }
@@ -22,6 +25,9 @@ public class LoanAccountFactory {
         return account;
     }
     public HouseLoanAccount createHouseLoanAccount(final Double loanAmount, final String collateralType, final Double collateralValue, final Integer durationInDays){
+        if(loanAmount<1000000){
+            throw new IllegalArgumentException("Car Loan Amount must be greater than 10 lakhs");
+        }
         if(durationInDays<1825){
             throw new IllegalArgumentException("House Loan Duration must be greater than 5 years");
         }
@@ -35,6 +41,9 @@ public class LoanAccountFactory {
         return account;
     }
     public PersonalLoanAccount createPersonalLoanAccount(final Double loanAmount, final String collateralType, final Double collateralValue, final Integer durationInDays){
+        if(loanAmount>600000){
+            throw new IllegalArgumentException("Car Loan Amount must be  6 lakhs or less");
+        }
         if(durationInDays>1825){
             throw new IllegalArgumentException("Personal Loan Duration must be 5 years or less");
         }
