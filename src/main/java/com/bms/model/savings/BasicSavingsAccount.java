@@ -4,13 +4,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "basic_savings_account")
+@Table(name = "basic_savings_accounts")
 public class BasicSavingsAccount extends SavingsAccount{
     public BasicSavingsAccount(){
-        super();
-        super.setSavingstype("Basic");
-        super.setCardtype("Visa");
-        super.setMinimumbalance(1000);
-        super.setMinimumbalancepenalty(100);
+        super(1000.0);
+        super.setSavingsType("Basic");
+        super.setCardType("Visa");
+        super.setMinimumBalance(1000);
+        super.setMinimumBalancePenalty(100);
     }
 }

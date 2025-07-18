@@ -4,49 +4,53 @@ import com.bms.model.Account;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "savings_account")
+@Table(name = "savings_accounts")
 @PrimaryKeyJoinColumn(name = "accountnumber")
 public class SavingsAccount extends Account {
-    private String savingstype;
-    private Integer minimumbalance;
-    private Integer minimumbalancepenalty;
-    private String cardtype;
+    private String savingsType;
+    private Integer minimumBalance;
+    private Integer minimumBalancePenalty;
+    private String cardType;
+
+    public SavingsAccount(Double balance){
+        super.setBalance(balance);
+    }
 
     public SavingsAccount() {
         super();
         super.setAccountType("Savings");
     }
 
-    public String getSavingstype() {
-        return savingstype;
+    public String getSavingsType() {
+        return savingsType;
     }
 
-    public void setSavingstype(String savingstype) {
-        this.savingstype = savingstype;
+    public void setSavingsType(String savingsType) {
+        this.savingsType = savingsType;
     }
 
-    public Integer getMinimumbalance() {
-        return minimumbalance;
+    public Integer getMinimumBalance() {
+        return minimumBalance;
     }
 
-    public void setMinimumbalance(Integer minimumbalance) {
-        this.minimumbalance = minimumbalance;
+    public void setMinimumBalance(Integer minimumBalance) {
+        this.minimumBalance = minimumBalance;
     }
 
-    public Integer getMinimumbalancepenalty() {
-        return minimumbalancepenalty;
+    public Integer getMinimumBalancePenalty() {
+        return minimumBalancePenalty;
     }
 
-    public void setMinimumbalancepenalty(Integer minimumbalancepenalty) {
-        this.minimumbalancepenalty = minimumbalancepenalty;
+    public void setMinimumBalancePenalty(Integer minimumBalancePenalty) {
+        this.minimumBalancePenalty = minimumBalancePenalty;
     }
 
-    public String getCardtype() {
-        return cardtype;
+    public String getCardType() {
+        return cardType;
     }
 
-    public void setCardtype(String cardtype) {
-        this.cardtype = cardtype;
+    public void setCardType(String cardType) {
+        this.cardType = cardType;
     }
 
     public void withdraw(int amount){

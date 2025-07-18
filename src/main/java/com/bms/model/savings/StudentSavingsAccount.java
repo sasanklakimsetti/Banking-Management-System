@@ -5,13 +5,13 @@ import jakarta.persistence.Table;
 import org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper;
 
 @Entity
-@Table(name = "student_savings_account")
+@Table(name = "student_savings_accounts")
 public class StudentSavingsAccount extends SavingsAccount{
     public StudentSavingsAccount(){
-        super();
-        super.setSavingstype("Student");
-        super.setMinimumbalance(500);
-        super.setMinimumbalancepenalty(50);
-        super.setCardtype("RuPay");
+        super(500.0);
+        super.setSavingsType("Student");
+        super.setMinimumBalance(500);
+        super.setMinimumBalancePenalty(50);
+        super.setCardType("RuPay");
     }
 }
