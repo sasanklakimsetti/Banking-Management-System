@@ -19,11 +19,11 @@ public class BasicSavingsAccountServiceImpl implements BasicSavingsAccountServic
 
     @Override
     public List<BasicSavingsAccount> getAllBasicSavingsAccountsByCustomerId(Long customerId) {
-        return basicSavingsAccountRepository.findAllByCustomerId_Customerid(customerId);
+        return basicSavingsAccountRepository.findAllByCustomerId_CustomerId(customerId);
     }
 
     @Override
     public BasicSavingsAccount getBasicSavingsAccountByCustomerId(Long customerId) {
-        return basicSavingsAccountRepository.findByCustomerId_Customerid(customerId);
+        return basicSavingsAccountRepository.findByCustomerId_CustomerId(customerId);
     }
 }

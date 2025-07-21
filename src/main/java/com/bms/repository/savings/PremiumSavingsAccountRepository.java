@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface PremiumSavingsAccountRepository extends JpaRepository<PremiumSavingsAccount, Long> {
-    List<PremiumSavingsAccount> findAllByCustomerId_Customerid(Long customerId);
+    List<PremiumSavingsAccount> findAllByCustomerId_CustomerId(Long customerId);
 
-    PremiumSavingsAccount findByCustomerId_Customerid(Long customerId);
+    PremiumSavingsAccount findByCustomerId_CustomerId(Long customerId);
 }

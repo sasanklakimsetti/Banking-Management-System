@@ -14,6 +14,6 @@ public class PersonalLoanAccountServiceImpl implements PersonalLoanAccountServic
     private PersonalLoanAccountRepository personalLoanAccountRepository;
     @Override
     public List<PersonalLoanAccount> getAllPersonalLoanAccountsByCustomerId(Long customerId) {
-        return personalLoanAccountRepository.findByCustomerId_Customerid(customerId);
+        return personalLoanAccountRepository.findByCustomerId_CustomerId(customerId);
     }
 }

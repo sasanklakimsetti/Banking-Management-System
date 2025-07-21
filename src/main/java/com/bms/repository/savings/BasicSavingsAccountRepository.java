@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface BasicSavingsAccountRepository extends JpaRepository<BasicSavingsAccount, Long> {
-    List<BasicSavingsAccount> findAllByCustomerId_Customerid(Long customerId);
+    List<BasicSavingsAccount> findAllByCustomerId_CustomerId(Long customerId);
 
-    BasicSavingsAccount findByCustomerId_Customerid(Long customerId);
+    BasicSavingsAccount findByCustomerId_CustomerId(Long customerId);
 }

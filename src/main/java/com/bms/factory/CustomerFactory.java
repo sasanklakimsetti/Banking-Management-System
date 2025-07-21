@@ -17,8 +17,8 @@ public class CustomerFactory {
         if(!aadhar.matches("\\d+")) throw new RuntimeException("Aadhar should only have digits.");
         if(pan.isEmpty()||pan.trim().isEmpty()) throw new RuntimeException("PAN can't be empty.");
         Customer customer=new Customer();
-        customer.setfName(fname);
-        customer.setLname(lname);
+        customer.setFirstName(fname);
+        customer.setLastName(lname);
         customer.setDob(dob);
         customer.setAddress(address);
         customer.setMobile(mobile);

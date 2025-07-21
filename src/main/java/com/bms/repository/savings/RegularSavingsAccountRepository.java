@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface RegularSavingsAccountRepository extends JpaRepository<RegularSavingsAccount, Long> {
-    List<RegularSavingsAccount> findAllByCustomerId_Customerid(Long customerId);
+    List<RegularSavingsAccount> findAllByCustomerId_CustomerId(Long customerId);
 
-    RegularSavingsAccount findByCustomerId_Customerid(Long customerId);
+    RegularSavingsAccount findByCustomerId_CustomerId(Long customerId);
 }

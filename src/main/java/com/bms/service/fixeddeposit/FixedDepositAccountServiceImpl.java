@@ -31,7 +31,7 @@ public class FixedDepositAccountServiceImpl implements FixedDepositAccountServic
 
     @Override
     public List<FixedDepositAccount> findAccountByCustomerId(Long customerId) {
-        return fixedDepositAccountRepository.findByCustomerId_Customerid(customerId);
+        return fixedDepositAccountRepository.findByCustomerId_CustomerId(customerId);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class FixedDepositAccountServiceImpl implements FixedDepositAccountServic
             throw new IllegalArgumentException("Fixed Deposit duration can't be less than "+FixedDepositAccount.fixedDurations.get(0)+" days");
         }
         account.setDueDate();
-        account.setTotalPayout();
+        account.setTotalPayout(account.getTotalPayout());
         return fixedDepositAccountRepository.save(account);
     }
 
@@ -57,7 +57,7 @@ public class FixedDepositAccountServiceImpl implements FixedDepositAccountServic
     @Override
     public void calculateEarlyWithdrawal(FixedDepositAccount account) {
         account.getDaysHeld();
-        account.setExpectedPayout();
+        account.setExpectedPayout(account.getTotalPayout());
     }
 
     @Override

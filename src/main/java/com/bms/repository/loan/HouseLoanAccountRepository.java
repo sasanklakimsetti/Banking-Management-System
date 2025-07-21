@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface HouseLoanAccountRepository extends JpaRepository<HouseLoanAccount, Long> {
-    List<HouseLoanAccount> findByCustomerId_Customerid(Long customerId);
+    List<HouseLoanAccount> findByCustomerId_CustomerId(Long customerId);
 }

@@ -68,7 +68,7 @@ public class LoanAccountServiceImpl implements LoanAccountService{
 
     @Override
     public List<LoanAccount> getAllAccountsByCustomerId(Long customerId) {
-        return loanAccountRepository.findByCustomerId_Customerid(customerId);
+        return loanAccountRepository.findByCustomerId_CustomerId(customerId);
     }
 
     @Override

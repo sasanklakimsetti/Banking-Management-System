@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface StudentSavingsAccountRepository extends JpaRepository<StudentSavingsAccount, Long> {
-    List<StudentSavingsAccount> findAllByCustomerId_Customerid(Long customerId);
+    List<StudentSavingsAccount> findAllByCustomerId_CustomerId(Long customerId);
 
-    StudentSavingsAccount findAByCustomerId_Customerid(Long customerId);
+    StudentSavingsAccount findAByCustomerId_CustomerId(Long customerId);
 }

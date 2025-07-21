@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface LoanAccountRepository extends JpaRepository<LoanAccount, Long> {
 
-    List<LoanAccount> findByCustomerId_Customerid(Long customerId);
+    List<LoanAccount> findByCustomerId_CustomerId(Long customerId);
 
     @Query("select s from StudentLoanAccount s")
     List<StudentLoanAccount>getAllStudentLoanAccounts();

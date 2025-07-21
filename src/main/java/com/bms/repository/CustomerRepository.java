@@ -12,11 +12,13 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     Customer findByAadhar(String aadhar);
 
-    Customer findByFName(String fname);
+    Customer findByFirstName(String fname);
 
-    Customer findByLName(String lname);
+    Customer findByLastName(String lname);
 
     Customer findByPan(String pan);
 
     List<Customer> findByAddress(String address);
+
+    Customer findByCustomerId(Long customerId);
 }

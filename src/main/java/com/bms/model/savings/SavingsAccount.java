@@ -18,7 +18,6 @@ public class SavingsAccount extends Account {
 
     public SavingsAccount() {
         super();
-        super.setAccountType("Savings");
     }
 
     public String getSavingsType() {

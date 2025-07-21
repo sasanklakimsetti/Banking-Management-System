@@ -19,11 +19,11 @@ public class PremiumSavingsAccountServiceImpl implements PremiumSavingsAccountSe
 
     @Override
     public List<PremiumSavingsAccount> getAllPremiumSavingsAccountsByCustomerId(Long customerId) {
-        return premiumSavingsAccountRepository.findAllByCustomerId_Customerid(customerId);
+        return premiumSavingsAccountRepository.findAllByCustomerId_CustomerId(customerId);
     }
 
     @Override
     public PremiumSavingsAccount getPremiumSavingsAccountByCustomerId(Long customerId) {
-        return premiumSavingsAccountRepository.findByCustomerId_Customerid(customerId);
+        return premiumSavingsAccountRepository.findByCustomerId_CustomerId(customerId);
     }
 }

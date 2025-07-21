@@ -14,6 +14,6 @@ public class StudentLoanAccountServiceImpl implements StudentLoanAccountService{
     private StudentLoanAccountRepository studentLoanAccountRepository;
     @Override
     public List<StudentLoanAccount> getAllStudentLoanAccountsByCustomerId(Long customerId) {
-        return studentLoanAccountRepository.findByCustomerId_Customerid(customerId);
+        return studentLoanAccountRepository.findByCustomerId_CustomerId(customerId);
     }
 }

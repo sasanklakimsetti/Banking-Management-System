@@ -16,6 +16,6 @@ public class HouseLoanAccountServiceImpl implements HouseLoanAccountService{
 
     @Override
     public List<HouseLoanAccount> getAllHouseLoanAccountsByCustomerId(Long customerId) {
-        return houseLoanAccountRepository.findByCustomerId_Customerid(customerId);
+        return houseLoanAccountRepository.findByCustomerId_CustomerId(customerId);
     }
 }

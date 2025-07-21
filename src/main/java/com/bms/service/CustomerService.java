@@ -1,5 +1,6 @@
 package com.bms.service;
 
+import com.bms.model.Account;
 import com.bms.model.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -13,11 +14,13 @@ public interface CustomerService {
     Customer showCustomerDetails(Long customerId);
     Customer updateCustomer(Long customerId, Customer customer);
     List<Customer>getAllCustomers();
+    Customer getCustomerByCustomerId(Long customerId);
     Customer getCustomerByMobile(String mobile);
     Customer getCustomerByAadhar(String aadhar);
     Customer getCustomerByFName(String fName);
     Customer getCustomerByLName(String lName);
     Customer getCustomerByPan(String pan);
     List<Customer> getCustomersByAddress(String address);
+    Account showAccountDetailsByCustomerId(Long customerId);
     //List<Transaction>showTransactionRecords(Long customerId);
 }

@@ -19,11 +19,11 @@ public class RegularSavingsAccountServiceImpl implements RegularSavingsAccountSe
 
     @Override
     public List<RegularSavingsAccount> getAllRegularSavingsAccountsByCustomerId(Long customerId) {
-        return regularSavingsAccountRepository.findAllByCustomerId_Customerid(customerId);
+        return regularSavingsAccountRepository.findAllByCustomerId_CustomerId(customerId);
     }
 
     @Override
     public RegularSavingsAccount getRegularSavingsAccountByCustomerId(Long customerId) {
-        return regularSavingsAccountRepository.findByCustomerId_Customerid(customerId);
+        return regularSavingsAccountRepository.findByCustomerId_CustomerId(customerId);
     }
 }

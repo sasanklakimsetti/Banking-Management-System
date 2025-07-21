@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface FixedDepositAccountRepository extends JpaRepository<FixedDepositAccount, Long> {
-    public List<FixedDepositAccount>findByCustomerId_Customerid(Long customerId);
+    public List<FixedDepositAccount>findByCustomerId_CustomerId(Long customerId);
 }

@@ -32,7 +32,7 @@ public class SavingsAccountServiceImpl implements SavingsAccountService{
 
     @Override
     public SavingsAccount closeSavingsAccount(Long customerId) {
-        SavingsAccount account=savingsAccountRepository.findByCustomerId_Customerid(customerId);
+        SavingsAccount account=savingsAccountRepository.findByCustomerId_CustomerId(customerId);
         if(account==null) throw new RuntimeException("No savings account found for customer ID: " + customerId);
         savingsAccountRepository.delete(account);
         return account;
@@ -40,7 +40,7 @@ public class SavingsAccountServiceImpl implements SavingsAccountService{
 
     @Override
     public List<SavingsAccount> getSavingsAccountsByCustomerId(Long customerId) {
-        return savingsAccountRepository.findAllByCustomerId_Customerid(customerId);
+        return savingsAccountRepository.findAllByCustomerId_CustomerId(customerId);
     }
 
     @Override

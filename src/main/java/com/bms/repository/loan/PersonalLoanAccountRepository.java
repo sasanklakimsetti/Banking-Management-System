@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface PersonalLoanAccountRepository extends JpaRepository<PersonalLoanAccount, Long> {
 
-    List<PersonalLoanAccount> findByCustomerId_Customerid(Long customerId);
+    List<PersonalLoanAccount> findByCustomerId_CustomerId(Long customerId);
 }

@@ -14,6 +14,6 @@ public class CarLoanAccountServiceImpl implements CarLoanAccountService{
 
     @Override
     public List<CarLoanAccount> getAllCarLoanAccountsByCustomerId(Long customerId) {
-        return carLoanAccountRepository.findByCustomerId_Customerid(customerId);
+        return carLoanAccountRepository.findByCustomerId_CustomerId(customerId);
     }
 }

@@ -30,9 +30,7 @@ public class FixedDepositAccount extends Account {
     public static ArrayList<Double> fixedInterestRates=new ArrayList<>(Arrays.asList(3.00, 3.00, 3.25, 3.50, 4.00, 4.50, 4.75, 5.25, 5.75, 6.50, 7.10, 7.20, 7.25, 7.00, 7.25, 7.00, 6.75, 7.10, 6.75, 6.60, 6.50, 6.50, 6.40, 6.25));
 
 
-    public FixedDepositAccount(){
-        super.setAccountType("Fixed Deposit");
-    }
+    public FixedDepositAccount(){}
 
     public Double getDepositAmount() {
         return depositAmount;
@@ -102,7 +100,7 @@ public class FixedDepositAccount extends Account {
                 ", expectedPayout=" + expectedPayout +
                 ", totalPayout=" + totalPayout +
                 ", balance=" + balance +
-                ", accountType='" + accountType + '\'' +
+                ","+
                 '}';
     }
 

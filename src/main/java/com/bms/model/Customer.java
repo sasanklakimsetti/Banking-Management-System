@@ -17,8 +17,8 @@ public class Customer {
             initialValue = 2200000
     )
     private Long customerId;
-    private String fName;
-    private String lName;
+    private String firstName;
+    private String lastName;
     @NotNull
     @Column(nullable = false)
     private Date dob;
@@ -36,8 +36,8 @@ public class Customer {
     public String toString() {
         return "Customer{" +
                 "customerId=" + customerId +
-                ", fName='" + fName + '\'' +
-                ", lName='" + lName + '\'' +
+                ", fName='" + firstName + '\'' +
+                ", lName='" + lastName + '\'' +
                 ", dob=" + dob +
                 ", address='" + address + '\'' +
                 ", mobile='" + mobile + '\'' +
@@ -55,20 +55,20 @@ public class Customer {
         this.customerId = customerId;
     }
 
-    public String getfName() {
-        return fName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setfName(String fName) {
-        this.fName = fName;
+    public void setFirstName(String fName) {
+        this.firstName = fName;
     }
 
-    public String getLName() {
-        return lName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLname(String lName) {
-        this.lName = lName;
+    public void setLastName(String lName) {
+        this.lastName = lName;
     }
 
     public Date getDob() {
@@ -123,8 +123,8 @@ public class Customer {
     }
 
     public Customer(String fName, String lName, Date dob, String address, String mobile, String mail, String aadhar, String pan) {
-        this.fName = fName;
-        this.lName = lName;
+        this.firstName = fName;
+        this.lastName = lName;
         this.dob = dob;
         this.address = address;
         this.mobile = mobile;

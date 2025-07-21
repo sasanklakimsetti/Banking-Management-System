@@ -33,7 +33,6 @@ public class LoanAccount extends Account {
     }
 
     public LoanAccount(){
-        super.setAccountType("Loan");
     }
 
     public Double getLoanAmount() {
@@ -103,7 +102,7 @@ public class LoanAccount extends Account {
                 ", durationInDays=" + durationInDays +
                 ", emiAmount=" + emiAmount +
                 ", balance=" + balance +
-                ", accountType='" + accountType + '\'' +
+                ","+
                 '}';
     }
 }

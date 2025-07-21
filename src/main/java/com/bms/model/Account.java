@@ -8,7 +8,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "accounts")
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "accounttype")
+@DiscriminatorColumn(name = "accountType")
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "account_seq")
@@ -20,11 +20,10 @@ public class Account {
     )
     private Long accountNumber;
     @OneToOne
-    @JoinColumn(name = "customerid", referencedColumnName = "customerid")
+    @JoinColumn(name = "customerid", referencedColumnName = "customerId", nullable = false)
     private Customer customerId;
-    protected Double balance;
+    protected Double balance=0.0;
     private Date creationDate;
-    protected String accountType;
 
     public Account() {
         this.creationDate=Date.valueOf(LocalDate.now());
@@ -62,14 +61,6 @@ public class Account {
         this.creationDate = creationDate;
     }
 
-    public String getAccountType() {
-        return accountType;
-    }
-
-    public void setAccountType(String accountType) {
-        this.accountType = accountType;
-    }
-
     
     public void showAccountDetails() {
         System.out.println("Account{" +
@@ -77,7 +68,7 @@ public class Account {
                 ", Customer Id: " + customerId +
                 ", Balance: " + balance +
                 ", Creation Date: " + creationDate +
-                ", Account Type='" + accountType + '\'' +
+                ", "+
                 '}');
     }
 

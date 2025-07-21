@@ -19,11 +19,11 @@ public class StudentSavingsAccountServiceImpl implements StudentSavingsAccountSe
 
     @Override
     public List<StudentSavingsAccount> getAllStudentSavingsAccountsByCustomerId(Long customerId) {
-        return studentSavingsAccountRepository.findAllByCustomerId_Customerid(customerId);
+        return studentSavingsAccountRepository.findAllByCustomerId_CustomerId(customerId);
     }
 
     @Override
     public StudentSavingsAccount getStudentSavingsAccountByCustomerId(Long customerId) {
-        return studentSavingsAccountRepository.findAByCustomerId_Customerid(customerId);
+        return studentSavingsAccountRepository.findAByCustomerId_CustomerId(customerId);
     }
 }
