@@ -4,6 +4,12 @@ import com.bms.model.Account;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
 
 @Entity
 @Table(name = "loan_accounts")
@@ -16,8 +22,19 @@ public class LoanAccount extends Account {
     private Double interestRate;
     private Integer durationInDays;
     private Double emiAmount;
+    private Integer remainingTenure;
 
-    public LoanAccount(){}
+    public Integer getRemainingTenure() {
+        return Math.toIntExact(ChronoUnit.DAYS.between((Temporal) super.getCreationDate(), LocalDate.now()));
+    }
+
+    public void setRemainingTenure(Integer remainingTenure) {
+        this.remainingTenure = remainingTenure;
+    }
+
+    public LoanAccount(){
+        super.setAccountType("Loan");
+    }
 
     public Double getLoanAmount() {
         return loanAmount;
@@ -71,11 +88,8 @@ public class LoanAccount extends Account {
         return emiAmount;
     }
 
-    public void setEmiAmount() {
-        int numberOfMonths = durationInDays / 30;
-        double monthlyInterestRate = interestRate / 100 / 12;
-        this.emiAmount = (loanAmount * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfMonths)) /
-                (Math.pow(1 + monthlyInterestRate, numberOfMonths) - 1);
+    public void setEmiAmount(Double emiAmount) {
+        this.emiAmount=emiAmount;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.bms.model.fixeddeposit;
 
 import com.bms.model.Account;
+import com.sun.jdi.DoubleValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
@@ -66,35 +67,28 @@ public class FixedDepositAccount extends Account {
     }
 
     public Integer getDaysHeld() {
-        Date present=Date.valueOf(LocalDate.now());
-        Date created=super.getCreationDate();
-        LocalDate presentDate=present.toLocalDate();
-        LocalDate createdDate=created.toLocalDate();
-        this.daysHeld = Math.toIntExact(ChronoUnit.DAYS.between(createdDate, presentDate));
         return daysHeld;
+    }
+
+    public void setDaysHeld(Integer daysHeld){
+        this.daysHeld=daysHeld;
     }
 
     public Double getExpectedPayout() {
         return expectedPayout;
     }
 
-    public void setExpectedPayout() {
+    public void setExpectedPayout(Double expectedPayout) {
         getDaysHeld();
-        int time = daysHeld / 365;
-        int n = 4;
-        double r = interestRate / 100.0;
-        this.expectedPayout=depositAmount+(depositAmount * Math.pow(1 + (r / n), n * time));
+        this.expectedPayout=expectedPayout;
     }
 
     public Double getTotalPayout() {
         return totalPayout;
     }
 
-    public void setTotalPayout() {
-        int time = duration / 365;
-        int n = 4;
-        double r = interestRate / 100.0;
-        this.totalPayout=depositAmount+(depositAmount * Math.pow(1 + (r / n), n * time));
+    public void setTotalPayout(Double totalPayout) {
+        this.totalPayout=totalPayout;
     }
 
     @Override

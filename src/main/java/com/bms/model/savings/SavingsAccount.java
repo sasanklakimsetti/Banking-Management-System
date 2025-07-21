@@ -54,10 +54,6 @@ public class SavingsAccount extends Account {
     }
 
     public void withdraw(int amount){
-        if(super.balance-amount<0){
-            System.out.println("Sorry, you can't withdraw since the balance is not enough");
-            return;
-        }
         super.setBalance(super.balance-amount);
     }
 }

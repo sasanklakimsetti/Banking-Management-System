@@ -81,7 +81,7 @@ public class Account {
                 '}');
     }
 
-    void deposit(int amount){
+    public void deposit(Double amount){
         balance+=amount;
     }
 }
