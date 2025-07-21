@@ -2,7 +2,9 @@ package com.bms.factory;
 
 import com.bms.model.fixeddeposit.FixedDepositAccount;
 import com.bms.util.FixedDepositUtil;
+import org.springframework.stereotype.Component;
 
+@Component
 public class FixedDepositAccountFactory {
     public FixedDepositAccount createFixedDepositAccount(final Double depositAmount, final Integer duration){
         if(duration<FixedDepositAccount.fixedDurations.get(0)){
@@ -13,7 +15,7 @@ public class FixedDepositAccountFactory {
         account.setDuration(duration);
         account.setInterestRate(FixedDepositUtil.getInterestRate(FixedDepositAccount.fixedDurations,FixedDepositAccount.fixedInterestRates,duration));
         account.setDueDate();
-        account.setTotalPayout();
+        account.setTotalPayout(FixedDepositUtil.calculatePayout(account.getDepositAmount(), account.getInterestRate(), account.getDuration()));
         return account;
     }
 }

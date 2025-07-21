@@ -4,6 +4,7 @@ import com.bms.model.loan.CarLoanAccount;
 import com.bms.model.loan.HouseLoanAccount;
 import com.bms.model.loan.PersonalLoanAccount;
 import com.bms.model.loan.StudentLoanAccount;
+import com.bms.util.LoanUtil;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -20,7 +21,7 @@ public class LoanAccountFactory {
         account.setCollateralType(collateralType);
         account.setCollateralValue(collateralValue);
         account.setDurationInDays(durationInDays);
-        account.setEmiAmount();
+        account.setEmiAmount(LoanUtil.calculateEMI(loanAmount,account.getInterestRate(),durationInDays));
         account.setBalance(-loanAmount);
         return account;
     }
@@ -36,7 +37,7 @@ public class LoanAccountFactory {
         account.setCollateralType(collateralType);
         account.setCollateralValue(collateralValue);
         account.setDurationInDays(durationInDays);
-        account.setEmiAmount();
+        account.setEmiAmount(LoanUtil.calculateEMI(loanAmount,account.getInterestRate(),durationInDays));
         account.setBalance(-loanAmount);
         return account;
     }
@@ -52,7 +53,7 @@ public class LoanAccountFactory {
         account.setCollateralType(collateralType);
         account.setCollateralValue(collateralValue);
         account.setDurationInDays(durationInDays);
-        account.setEmiAmount();
+        account.setEmiAmount(LoanUtil.calculateEMI(loanAmount,account.getInterestRate(),durationInDays));
         account.setBalance(-loanAmount);
         return account;
     }
@@ -65,7 +66,7 @@ public class LoanAccountFactory {
         account.setCollateralType(collateralType);
         account.setCollateralValue(collateralValue);
         account.setDurationInDays(durationInDays);
-        account.setEmiAmount();
+        account.setEmiAmount(LoanUtil.calculateEMI(loanAmount,account.getInterestRate(),durationInDays));
         account.setBalance(-loanAmount);
         return account;
     }
