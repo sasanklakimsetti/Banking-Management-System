@@ -19,7 +19,7 @@ public class Account {
             initialValue = 2600000
     )
     private Long accountNumber;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "customerid", referencedColumnName = "customerId", nullable = false)
     private Customer customerId;
     protected Double balance=0.0;

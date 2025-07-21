@@ -25,7 +25,8 @@ public class LoanAccount extends Account {
     private Integer remainingTenure;
 
     public Integer getRemainingTenure() {
-        return Math.toIntExact(ChronoUnit.DAYS.between((Temporal) super.getCreationDate(), LocalDate.now()));
+        LocalDate creationDate = super.getCreationDate().toLocalDate(); // convert java.sql.Date to LocalDate
+        return Math.toIntExact(ChronoUnit.DAYS.between(creationDate, LocalDate.now()));
     }
 
     public void setRemainingTenure(Integer remainingTenure) {
