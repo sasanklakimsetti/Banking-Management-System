@@ -16,9 +16,9 @@ public class Customer {
             allocationSize = 1,
             initialValue = 2200000
     )
-    private Long customerid;
-    private String fname;
-    private String lname;
+    private Long customerId;
+    private String fName;
+    private String lName;
     @NotNull
     @Column(nullable = false)
     private Date dob;
@@ -32,28 +32,43 @@ public class Customer {
     @Column(nullable = false)
     private String pan;
 
-    public Long getCustomerid() {
-        return customerid;
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "customerId=" + customerId +
+                ", fName='" + fName + '\'' +
+                ", lName='" + lName + '\'' +
+                ", dob=" + dob +
+                ", address='" + address + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", mail='" + mail + '\'' +
+                ", aadhar='" + aadhar + '\'' +
+                ", pan='" + pan + '\'' +
+                '}';
     }
 
-    public void setCustomerid(Long customerid) {
-        this.customerid = customerid;
+    public Long getCustomerId() {
+        return customerId;
     }
 
-    public String getFname() {
-        return fname;
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
-    public void setFname(String fname) {
-        this.fname = fname;
+    public String getfName() {
+        return fName;
     }
 
-    public String getLname() {
-        return lname;
+    public void setfName(String fName) {
+        this.fName = fName;
     }
 
-    public void setLname(String lname) {
-        this.lname = lname;
+    public String getLName() {
+        return lName;
+    }
+
+    public void setLname(String lName) {
+        this.lName = lName;
     }
 
     public Date getDob() {
@@ -107,9 +122,9 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String fname, String lname, Date dob, String address, String mobile, String mail, String aadhar, String pan) {
-        this.fname = fname;
-        this.lname = lname;
+    public Customer(String fName, String lName, Date dob, String address, String mobile, String mail, String aadhar, String pan) {
+        this.fName = fName;
+        this.lName = lName;
         this.dob = dob;
         this.address = address;
         this.mobile = mobile;
@@ -118,18 +133,4 @@ public class Customer {
         this.pan = pan;
     }
 
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "customerid=" + customerid +
-                ", fname='" + fname + '\'' +
-                ", lname='" + lname + '\'' +
-                ", dob=" + dob +
-                ", address='" + address + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", mail='" + mail + '\'' +
-                ", aadhar='" + aadhar + '\'' +
-                ", pan='" + pan + '\'' +
-                '}';
-    }
 }
