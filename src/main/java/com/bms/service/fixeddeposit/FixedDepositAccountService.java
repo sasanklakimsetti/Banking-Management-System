@@ -1,18 +1,17 @@
 package com.bms.service.fixeddeposit;
 
 import com.bms.model.fixeddeposit.FixedDepositAccount;
-import org.springframework.stereotype.Service;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-@Service
 public interface FixedDepositAccountService {
-    FixedDepositAccount getAccountById(Long accountNumber);
-    List<FixedDepositAccount>getAllAccounts();
-    List<FixedDepositAccount> findAccountByCustomerId(Long customerId);
-    FixedDepositAccount renewAccount(FixedDepositAccount account, Integer newDuration);
-    FixedDepositAccount openAccount(FixedDepositAccount account);
-    void calculateEarlyWithdrawal(FixedDepositAccount account);
-    void withdraw(FixedDepositAccount account);
-    FixedDepositAccount closeAccount(FixedDepositAccount account);
+    ResponseEntity<?> getAccountById(Long accountNumber);
+    ResponseEntity<List<FixedDepositAccount>> getAllAccounts();
+    ResponseEntity<List<FixedDepositAccount>> findAccountByCustomerId(Long customerId);
+    ResponseEntity<?> renewAccount(FixedDepositAccount account, Integer newDuration);
+    ResponseEntity<?> openAccount(Long customerId, FixedDepositAccount account);
+    ResponseEntity<?> calculateEarlyWithdrawal(FixedDepositAccount account);
+    ResponseEntity<?> withdraw(FixedDepositAccount account);
+    ResponseEntity<?> closeAccount(FixedDepositAccount account);
 }
