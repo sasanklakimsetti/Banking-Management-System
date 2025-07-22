@@ -9,9 +9,9 @@ public interface FixedDepositAccountService {
     ResponseEntity<?> getAccountById(Long accountNumber);
     ResponseEntity<List<FixedDepositAccount>> getAllAccounts();
     ResponseEntity<List<FixedDepositAccount>> findAccountByCustomerId(Long customerId);
-    ResponseEntity<?> renewAccount(FixedDepositAccount account, Integer newDuration);
+    ResponseEntity<?> renewAccount(Long accountNumber, Integer newDuration);
     ResponseEntity<?> openAccount(Long customerId, FixedDepositAccount account);
-    ResponseEntity<?> calculateEarlyWithdrawal(FixedDepositAccount account);
-    ResponseEntity<?> withdraw(FixedDepositAccount account);
-    ResponseEntity<?> closeAccount(FixedDepositAccount account);
+    ResponseEntity<?> calculateEarlyWithdrawal(Long accountNumber);
+    ResponseEntity<?> withdraw(Long accountNumber);
+    ResponseEntity<?> closeAccount(Long accountNumber);
 }

@@ -1,58 +1,114 @@
 package com.bms.controller;
 
 import com.bms.model.fixeddeposit.FixedDepositAccount;
-import com.bms.repository.fixeddeposit.FixedDepositAccountRepository;
 import com.bms.service.fixeddeposit.FixedDepositAccountService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Slf4j
+@Controller
 @RequestMapping("/fixed_deposit")
 public class FixedDepositAccountController {
 
     @Autowired
     private FixedDepositAccountService fixedDepositAccountService;
 
-    @Autowired
-    private FixedDepositAccountRepository fixedDepositAccountRepository;
-
-    @PostMapping("/create_account/{customerId}")
-    public ResponseEntity<?> openFixedDeposit(@PathVariable Long customerId,
-                                              @RequestBody FixedDepositAccount account) {
-        return fixedDepositAccountService.openAccount(customerId, account);
+    // Show the FD creation form
+    @GetMapping("/create_account")
+    public String showCreateForm(@RequestParam Long customerId, Model model) {
+        model.addAttribute("customerId", customerId);
+        return "fixed_deposit/openFixedDeposit";
     }
 
-    @GetMapping("/account/{accountNumber}")
-    public ResponseEntity<?> getFixedDepositById(@PathVariable Long accountNumber) {
-        return fixedDepositAccountService.getAccountById(accountNumber);
+    // Handle FD creation form submission
+    @PostMapping("/create_account")
+    public String openFixedDeposit(
+            @ModelAttribute FixedDepositAccount account,
+            @RequestParam Long customerId,
+            Model model
+    ) {
+        System.out.println("➡️ depositAmount from form: " + account.getDepositAmount());
+        System.out.println("➡️ balance before setting: " + account.getBalance());
+        ResponseEntity<?> response = fixedDepositAccountService.openAccount(customerId, account);
+
+        if (response.getStatusCode().is2xxSuccessful() && response.getBody() instanceof FixedDepositAccount created) {
+            model.addAttribute("accountNumber", created.getAccountNumber());
+            model.addAttribute("dueDate", created.getDueDate());
+            model.addAttribute("totalPayout", created.getTotalPayout());
+            return "fixed_deposit/accountCreated"; // JSP will use JS to show this info
+        } else {
+            model.addAttribute("error", response.getBody());
+            return "error";
+        }
     }
 
-    @GetMapping("/customer/{customerId}")
-    public ResponseEntity<?> getAccountsByCustomerId(@PathVariable Long customerId) {
-        return fixedDepositAccountService.findAccountByCustomerId(customerId);
+    // Show the FD renewal form
+    @GetMapping("/renew_account")
+    public String showRenewForm(@RequestParam Long accountNumber, Model model) {
+        model.addAttribute("accountNumber", accountNumber);
+        return "fixed_deposit/renewFixedDeposit";
     }
 
-    @PutMapping("/renew_account/{accountNumber}")
-    public ResponseEntity<?> renewFixedDeposit(@PathVariable Long accountNumber,
-                                               @RequestParam Integer newDuration) {
-        FixedDepositAccount account=fixedDepositAccountRepository.findById(accountNumber).orElse(null);
-        if (account==null) return new ResponseEntity<>("Account not found", HttpStatus.NOT_FOUND);
-        return fixedDepositAccountService.renewAccount(account, newDuration);
+    // Handle FD renewal form submission
+    @PostMapping("/renew_account")
+    public String renewFixedDeposit(
+            @RequestParam Long accountNumber,
+            @RequestParam Integer newDuration,
+            Model model
+    ) {
+        ResponseEntity<?> response = fixedDepositAccountService.renewAccount(accountNumber, newDuration);
+
+        if (response.getStatusCode().is2xxSuccessful() && response.getBody() instanceof FixedDepositAccount renewed) {
+            model.addAttribute("dueDate", renewed.getDueDate());
+            model.addAttribute("totalPayout", renewed.getTotalPayout());
+            return "fixed_deposit/accountRenewed";
+        }
+
+        model.addAttribute("error", response.getBody());
+        return "error";
     }
 
-    @DeleteMapping("/close_account/{accountNumber}")
-    public ResponseEntity<?> closeFixedDeposit(@PathVariable Long accountNumber) {
-        FixedDepositAccount account=fixedDepositAccountRepository.findById(accountNumber).orElse(null);
-        if (account==null) return new ResponseEntity<>("Account not found", HttpStatus.NOT_FOUND);
-        return fixedDepositAccountService.closeAccount(account);
+    // Handle withdrawal POST request
+    @PostMapping("/withdraw")
+    public String withdrawFromFixedDeposit(@RequestParam Long accountNumber, Model model) {
+        log.debug("WITHDRAW START: Account #" + accountNumber); // << CHECK if this prints
+        ResponseEntity<?> response = fixedDepositAccountService.withdraw(accountNumber);
+        log.debug("WITHDRAW RESPONSE: " + response); // << Important!
+
+        if (response.getStatusCode().is2xxSuccessful() && response.getBody() instanceof FixedDepositAccount account) {
+            boolean isPremature = account.getDaysHeld() < account.getDuration();
+            model.addAttribute("payoutAmount", isPremature ? account.getExpectedPayout() : account.getTotalPayout());
+            model.addAttribute("isPremature", isPremature);
+            return "fixed_deposit/withdrawalSuccess"; // Must match actual JSP name
+        }
+
+        model.addAttribute("error", response.getBody());
+        return "error";
     }
 
-    @PutMapping("/withdraw/{accountNumber}")
-    public ResponseEntity<?> withdrawFromFixedDeposit(@PathVariable Long accountNumber) {
-        FixedDepositAccount account=fixedDepositAccountRepository.findById(accountNumber).orElse(null);
-        if (account==null) return new ResponseEntity<>("Account not found", HttpStatus.NOT_FOUND);
-        return fixedDepositAccountService.withdraw(account);
+
+
+
+    // Success page after withdrawal
+    @GetMapping("/withdraw_success")
+    public String showWithdrawSuccessPage() {
+        return "fixed_deposit/withdrawalSuccess";
+    }
+
+    // Close FD account
+    @PostMapping("/close_account")
+    public String closeFixedDeposit(@RequestParam Long accountNumber, Model model) {
+        ResponseEntity<?> response = fixedDepositAccountService.closeAccount(accountNumber);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            return "fixed_deposit/accountClosed";
+        }
+
+        model.addAttribute("error", response.getBody());
+        return "error";
     }
 }

@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.Temporal;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +33,7 @@ public class FixedDepositAccountServiceImpl implements FixedDepositAccountServic
         Optional<FixedDepositAccount> optionalAccount = fixedDepositAccountRepository.findById(accountNumber);
 
         return optionalAccount
-                .<ResponseEntity<?>>map(account -> ResponseEntity.ok(account))
+                .<ResponseEntity<?>>map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity
                         .status(HttpStatus.NOT_FOUND)
                         .body("Account not found with account number: " + accountNumber));
@@ -52,17 +51,27 @@ public class FixedDepositAccountServiceImpl implements FixedDepositAccountServic
     }
 
     @Override
-    public ResponseEntity<?> renewAccount(FixedDepositAccount account, Integer newDuration) {
+    public ResponseEntity<?> renewAccount(Long accountNumber, Integer newDuration) {
+        Optional<FixedDepositAccount> optionalAccount = fixedDepositAccountRepository.findById(accountNumber);
+
+        if (optionalAccount.isEmpty()) {
+            return new ResponseEntity<>("Account not found with account number: " + accountNumber, HttpStatus.NOT_FOUND);
+        }
+
+        FixedDepositAccount account = optionalAccount.get();
+
         if (newDuration < FixedDepositAccount.fixedDurations.get(0)) {
             return new ResponseEntity<>(
                     "Duration must be at least " + FixedDepositAccount.fixedDurations.get(0) + " days",
                     HttpStatus.BAD_REQUEST
             );
         }
+
+        account.setDuration(newDuration);
         account.setDueDate();
         account.setTotalPayout(account.getTotalPayout());
         fixedDepositAccountRepository.save(account);
-        return new ResponseEntity<>("Account renewed successfully", HttpStatus.OK);
+        return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
     @Override
@@ -79,6 +88,7 @@ public class FixedDepositAccountServiceImpl implements FixedDepositAccountServic
                     account.getDuration()
             );
             newAccount.setCustomerId(optionalCustomer.get());
+            newAccount.setBalance(account.getDepositAmount());
 
             FixedDepositAccount saved = fixedDepositAccountRepository.save(newAccount);
             return new ResponseEntity<>(saved, HttpStatus.CREATED);
@@ -87,45 +97,65 @@ public class FixedDepositAccountServiceImpl implements FixedDepositAccountServic
         }
     }
 
-
-
     @Override
-    public ResponseEntity<?> calculateEarlyWithdrawal(FixedDepositAccount account) {
+    public ResponseEntity<?> calculateEarlyWithdrawal(Long accountNumber) {
+        Optional<FixedDepositAccount> optionalAccount = fixedDepositAccountRepository.findById(accountNumber);
+
+        if (optionalAccount.isEmpty()) {
+            return new ResponseEntity<>("Account not found with account number: " + accountNumber, HttpStatus.NOT_FOUND);
+        }
+
+        FixedDepositAccount account = optionalAccount.get();
+
         account.getDaysHeld();
-        account.setExpectedPayout(account.getTotalPayout());
-        return new ResponseEntity<>("Expected payout calculated: " + account.getExpectedPayout(), HttpStatus.OK);
+        account.setExpectedPayout(account.getTotalPayout()); // Replace with real calculation logic if needed
+        account.setBalance(0.0);
+        return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
     @Override
     @Transactional
-    public ResponseEntity<?> withdraw(FixedDepositAccount account) {
+    public ResponseEntity<?> withdraw(Long accountNumber) {
+        Optional<FixedDepositAccount> optionalAccount = fixedDepositAccountRepository.findById(accountNumber);
+
+        if (optionalAccount.isEmpty()) {
+            return new ResponseEntity<>("Account not found with account number: " + accountNumber, HttpStatus.NOT_FOUND);
+        }
+
+        FixedDepositAccount account = optionalAccount.get();
         Integer daysHeld = account.getDaysHeld();
 
-        if (daysHeld == null) {
-            if (account.getCreationDate() != null) {
-                LocalDate createdDate = account.getCreationDate().toLocalDate();
-                daysHeld = (int) ChronoUnit.DAYS.between(createdDate, LocalDate.now());
-            } else daysHeld = 0;
+        if (daysHeld == null && account.getCreationDate() != null) {
+            LocalDate createdDate = account.getCreationDate().toLocalDate();
+            daysHeld = (int) ChronoUnit.DAYS.between(createdDate, LocalDate.now());
         }
 
-        if (daysHeld >= account.getDuration()) {
-            account.setBalance(0.0);
-            fixedDepositAccountRepository.save(account);
-            return new ResponseEntity<>("Matured! You receive: Rs. " + account.getTotalPayout(), HttpStatus.OK);
+        if (daysHeld == null) daysHeld = 0;
+
+        boolean isPremature = daysHeld < account.getDuration();
+        if (isPremature) {
+            account.setExpectedPayout(account.getTotalPayout()); // Optionally apply penalty
         }
 
-        calculateEarlyWithdrawal(account);
-        return new ResponseEntity<>("Premature withdrawal. You receive: Rs. " + account.getExpectedPayout(), HttpStatus.OK);
+        // ✅ Ensure balance is set to 0 and saved
+        account.setBalance(0.0);
+        fixedDepositAccountRepository.save(account);
+
+        return new ResponseEntity<>(account, HttpStatus.OK);
     }
+
+
 
     @Override
     @Transactional
-    public ResponseEntity<?> closeAccount(FixedDepositAccount account) {
-        return fixedDepositAccountRepository.findById(account.getAccountNumber())
-                .map(existingAccount -> {
-                    fixedDepositAccountRepository.deleteById(account.getAccountNumber());
-                    return new ResponseEntity<>("Account closed successfully", HttpStatus.OK);
-                })
-                .orElseGet(() -> new ResponseEntity<>("Account not found", HttpStatus.NOT_FOUND));
+    public ResponseEntity<?> closeAccount(Long accountNumber) {
+        Optional<FixedDepositAccount> optionalAccount = fixedDepositAccountRepository.findById(accountNumber);
+
+        if (optionalAccount.isEmpty()) {
+            return new ResponseEntity<>("Account not found with account number: " + accountNumber, HttpStatus.NOT_FOUND);
+        }
+
+        fixedDepositAccountRepository.deleteById(accountNumber);
+        return new ResponseEntity<>("Account closed successfully", HttpStatus.OK);
     }
 }
