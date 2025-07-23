@@ -29,21 +29,25 @@ public class LoanAccountServiceImpl implements LoanAccountService{
         if("Car".equalsIgnoreCase(loanType)){
             LoanAccount newAccount=loanAccountFactory.createCarLoanAccount(account.getLoanAmount(),account.getCollateralType(),account.getCollateralValue(),account.getDurationInDays());
             newAccount.setCustomerId(account.getCustomerId());
+            newAccount.setLoanType("Car");
             return loanAccountRepository.save(newAccount);
         }
         else if("House".equalsIgnoreCase(loanType)){
             LoanAccount newAccount=loanAccountFactory.createHouseLoanAccount(account.getLoanAmount(),account.getCollateralType(),account.getCollateralValue(),account.getDurationInDays());
             newAccount.setCustomerId(account.getCustomerId());
+            newAccount.setLoanType("House");
             return loanAccountRepository.save(newAccount);
         }
         else if("Personal".equalsIgnoreCase(loanType)){
             LoanAccount newAccount=loanAccountFactory.createPersonalLoanAccount(account.getLoanAmount(),account.getCollateralType(),account.getCollateralValue(),account.getDurationInDays());
             newAccount.setCustomerId(account.getCustomerId());
+            newAccount.setLoanType("Personal");
             return loanAccountRepository.save(newAccount);
         }
         else if("Student".equalsIgnoreCase(loanType)){
             LoanAccount newAccount=loanAccountFactory.createStudentLoanAccount(account.getLoanAmount(),account.getCollateralType(),account.getCollateralValue(),account.getDurationInDays());
             newAccount.setCustomerId(account.getCustomerId());
+            newAccount.setLoanType("Student");
             return loanAccountRepository.save(newAccount);
         }
         throw new IllegalArgumentException("Unsupported loan type: "+loanType);

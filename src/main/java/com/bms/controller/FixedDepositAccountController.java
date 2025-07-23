@@ -75,9 +75,7 @@ public class FixedDepositAccountController {
     // Handle withdrawal POST request
     @PostMapping("/withdraw")
     public String withdrawFromFixedDeposit(@RequestParam Long accountNumber, Model model) {
-        log.debug("WITHDRAW START: Account #" + accountNumber); // << CHECK if this prints
         ResponseEntity<?> response = fixedDepositAccountService.withdraw(accountNumber);
-        log.debug("WITHDRAW RESPONSE: " + response); // << Important!
 
         if (response.getStatusCode().is2xxSuccessful() && response.getBody() instanceof FixedDepositAccount account) {
             boolean isPremature = account.getDaysHeld() < account.getDuration();
