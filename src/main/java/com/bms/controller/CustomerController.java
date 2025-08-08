@@ -4,15 +4,18 @@ import com.bms.factory.CustomerFactory;
 import com.bms.model.Account;
 import com.bms.model.Customer;
 import com.bms.service.CustomerService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
-@Controller
+@RestController
 @RequestMapping("/customer")
 public class CustomerController {
 
@@ -21,28 +24,6 @@ public class CustomerController {
 
     @Autowired
     private CustomerFactory customerFactory;
-
-    @GetMapping("/register")
-    public String showRegistrationForm() {
-        return "register";
-    }
-
-    @PostMapping("/create")
-    public String addCustomer(
-            @RequestParam String fname,
-            @RequestParam String lname,
-            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date dob,
-            @RequestParam String address,
-            @RequestParam(required = false) String mobile,
-            @RequestParam(required = false) String email,
-            @RequestParam String aadhar,
-            @RequestParam String pan
-    ) {
-        java.sql.Date sqlDob = new java.sql.Date(dob.getTime());
-        Customer customer = customerFactory.createCustomer(fname, lname, sqlDob, address, mobile, email, aadhar, pan);
-        customerService.createCustomer(customer);
-        return "redirect:/customer/success";
-    }
 
     @GetMapping("/success")
     public String showSuccessPage() {

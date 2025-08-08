@@ -3,8 +3,10 @@ package com.bms.service;
 import com.bms.factory.CustomerFactory;
 import com.bms.model.Account;
 import com.bms.model.Customer;
+import com.bms.model.User;
 import com.bms.repository.AccountRepository;
 import com.bms.repository.CustomerRepository;
+import com.bms.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +21,21 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public Customer createCustomer(Customer customer) {
-        Customer customer1=customerFactory.createCustomer(customer.getFirstName(), customer.getLastName(), customer.getDob(), customer.getAddress(), customer.getMobile(), customer.getMail(), customer.getAadhar(), customer.getPan());
+        Customer customer1=customerFactory.createCustomer(
+                customer.getFirstName(),
+                customer.getLastName(),
+                customer.getDob(),
+                customer.getAddress(),
+                customer.getMobile(),
+                customer.getMail(),
+                customer.getAadhar(),
+                customer.getPan()
+        );
         if (customer1==null) throw new RuntimeException("Error in creating new customer");
         return customerRepository.save(customer1);
     }

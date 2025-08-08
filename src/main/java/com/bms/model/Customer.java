@@ -2,7 +2,6 @@ package com.bms.model;
 
 import jakarta.persistence.*;
 import org.antlr.v4.runtime.misc.NotNull;
-
 import java.sql.Date;
 
 @Entity
@@ -17,6 +16,10 @@ public class Customer {
             initialValue = 2200000
     )
     private Long customerId;
+
+    @OneToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    private User user;
     private String firstName;
     private String lastName;
     @NotNull
@@ -117,6 +120,14 @@ public class Customer {
 
     public void setPan(String pan) {
         this.pan = pan;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user=user;
     }
 
     public Customer() {
